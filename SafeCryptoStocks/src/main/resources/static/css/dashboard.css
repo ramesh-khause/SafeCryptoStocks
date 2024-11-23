@@ -1,0 +1,267 @@
+/* General Styles */
+* {
+    padding: 0;
+    margin: 0;
+    font-family: "Roboto", sans-serif;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #f4f5f7;
+    color: #333;
+    font-size: 16px;
+}
+
+/* Navigation Bar */
+#navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+#navbar:hover {
+    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+#logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: #007bff;
+    transition: color 0.3s ease;
+}
+
+#logo:hover {
+    color: #0056b3;
+}
+
+#menu a {
+    margin: 0 15px;
+    text-decoration: none;
+    color: #333;
+    font-size: 16px;
+    position: relative;
+    transition: color 0.3s ease;
+}
+
+#menu a:hover {
+    color: #007bff;
+}
+
+#menu a::after {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 2px;
+    background-color: #007bff;
+    left: 0;
+    bottom: -5px;
+    transition: width 0.3s;
+}
+
+#menu a:hover::after {
+    width: 100%;
+}
+
+#profile {
+    display: flex;
+    align-items: center;
+}
+
+#profile img {
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+    transition: transform 0.3s ease;
+}
+
+#profile img:hover {
+    transform: scale(1.1);
+}
+
+#user-name {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+#view-profile {
+    font-size: 14px;
+    color: #007bff;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+#view-profile:hover {
+    color: #0056b3;
+    text-decoration: underline;
+}
+
+/* Dashboard Content */
+#dashboard-content {
+    display: flex;
+    flex-direction: column;
+    padding: 40px;
+    gap: 30px;
+}
+
+/* Logout Button */
+#logout-btn {
+    padding: 10px 20px;
+    background-color: #ff4d4d;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+    font-size: 14px;
+    margin-top: 10px;
+    transition: background-color 0.3s ease;
+}
+
+#logout-btn:hover {
+    background-color: #e60000;
+    transform: scale(1.05);
+}
+
+/* My Portfolios Section */
+#my-portfolios {
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    transition: box-shadow 0.3s ease;
+}
+
+#my-portfolios:hover {
+    box-shadow: 0px 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+#my-portfolios h3 {
+    font-size: 20px;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+/* Balance Section */
+#balance-section {
+    display: flex;
+    justify-content: space-between;
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    align-items: center;
+    transition: box-shadow 0.3s ease;
+}
+
+#balance-section:hover {
+    box-shadow: 0px 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+#current-balance {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+#current-balance h2 {
+    font-size: 22px;
+    color: #333;
+}
+
+#current-balance p {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+#current-balance .change {
+    color: green;
+    font-size: 16px;
+    font-weight: normal;
+}
+
+#buy-stocks {
+    padding: 10px 20px;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#buy-stocks:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}
+
+/* Assets Section */
+#assets-section {
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    transition: box-shadow 0.3s ease;
+}
+
+#assets-section:hover {
+    box-shadow: 0px 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+#assets-section h3 {
+    font-size: 20px;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+th, td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background-color: #f8f9fa;
+    font-weight: bold;
+}
+
+td {
+    background-color: #ffffff;
+    transition: background-color 0.3s ease;
+}
+
+td:hover {
+    background-color: #f1f1f1;
+}
+
+.down {
+    color: red;
+}
+
+.profit {
+    color: green;
+}
+
+.action-button {
+    padding: 5px 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.action-button:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}

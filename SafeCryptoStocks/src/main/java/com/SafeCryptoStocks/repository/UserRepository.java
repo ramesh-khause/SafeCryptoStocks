@@ -1,0 +1,14 @@
+package com.SafeCryptoStocks.repository;
+
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+import com.SafeCryptoStocks.model.User;
+
+@Repository
+// UserRepository
+public interface UserRepository extends JpaRepository<User, Long> {
+	boolean existsByEmail(String email);
+	User findByEmail(String email);
+}
+

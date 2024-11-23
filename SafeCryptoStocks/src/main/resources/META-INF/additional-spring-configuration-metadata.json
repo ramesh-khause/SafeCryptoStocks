@@ -1,0 +1,12 @@
+{"properties": [
+  {
+    "name": "spring.jta.atomikos.datasource.xa-data-source-class-name",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.jta.atomikos.datasource.xa-data-source-class-name'"
+  },
+  {
+    "name": "spring.session.store-type",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.session.store-type'"
+  }
+]}
