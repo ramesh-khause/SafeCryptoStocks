@@ -21,7 +21,7 @@ public class EmailService {
     @Autowired
     private JavaMailSender mailSender;
 
-    private final String senderEmail = "rameshkumarjma@gmail.com"; // Set your sender's email address here
+    private final String senderEmail = "rameshkumar@gmail.com"; // Set your sender's email address here
 
     public void sendOtpEmail(String toEmail, String subject, String otp) {
         String content = "<html><body style='font-family: Arial, sans-serif; background-color: #f4f4f4; padding: 20px;'>"
