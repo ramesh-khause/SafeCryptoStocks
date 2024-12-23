@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SafeCryptoStocks - Buy Crypto Safely</title>
+    <link rel="stylesheet" href="/css/home.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+</head>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="/js/home.js" defer></script>
+</head>
+
+<body>
+   <nav class="navbar">
+    <div class="logo">
+        <a href="/home">
+            <i class="fa-brands fa-servicestack"></i> SafeCryptoStocks
+        </a>
+    </div>
+    <div class="auth-buttons">
+        <a href="/login" class="btn login">Login</a>
+        <a href="/signup" class="btn signup">Sign Up</a>
+    </div>
+</nav>
+   
+    
+
+    <header class="hero-section">
+        <div class="hero-content">
+            <h1>Invest in Cryptocurrencies with Confidence</h1>
+            <p>Join SafeCryptoStocks to trade securely and efficiently.</p>
+            <a href="/signup" class="btn get-started">Get Started</a>
+        </div>
+    </header>
+
+    <main>
+        <section class="crypto-market">
+            <h2>Live Cryptocurrency Prices</h2>
+            <div class="market-overview">
+                <div class="crypto-card">
+                    <h3>Bitcoin (BTC)</h3>
+                    <p>Price: <span id="btc-price">$48,000</span></p>
+                    <p>Change: <span id="btc-change" class="change up">+2.5%</span></p>
+                </div>
+                <div class="crypto-card">
+                    <h3>Ethereum (ETH)</h3>
+                    <p>Price: <span id="eth-price">$3,200</span></p>
+                    <p>Change: <span id="eth-change" class="change down">-1.2%</span></p>
+                </div>
+                <!-- Add more crypto cards as needed -->
+            </div>
+            <canvas id="marketChart" width="800" height="400"></canvas>
+        </section>
+
+        <section class="features">
+            <h2>Why Choose SafeCryptoStocks?</h2>
+            <div class="features-grid">
+                <div class="feature">
+                    <i class="fas fa-shield-alt"></i>
+                    <h3>Secure Transactions</h3>
+                    <p>Experience top-notch security for all your crypto trades.</p>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-chart-line"></i>
+                    <h3>Real-Time Market Data</h3>
+                    <p>Stay updated with live market trends and analytics.</p>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-user-friends"></i>
+                    <h3>User-Friendly Interface</h3>
+                    <p>Navigate our platform with ease and confidence.</p>
+                </div>
+                <!-- Add more features as needed -->
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2024 SafeCryptoStocks. All rights reserved.</p>
+    </footer>
+</body>
+
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio</title>
+    <link rel="stylesheet" href="portfolio.css" th:href="@{/css/portfolio.css}" />
+</head>
+
+<body>
+    <!-- Navigation Bar -->
+    <div id="navbar">
+        <div id="logo" style="display: flex; align-items: center; gap: 10px;">
+    <img src="/image/logo1.png" alt="Logo" style="width: 50px; height: auto;">
+    <span style="font-size: 1.5rem; font-weight: bold;">SafeCryptoStocks</span>
+</div>
+        
+        <div id="menu">
+            <a th:href="@{/dashboard}">Dashboard</a>
+            <a th:href="@{/market}">Market</a>
+            <a th:href="@{/portfolio}">Portfolio</a>
+            <a th:href="@{/budget}">Budget</a>
+            <a th:href="@{/learn}">Learn</a>
+        </div>
+        <div id="profile">
+        
+               <img th:src="${profileUrl}" alt="Profile Picture" width="40" height="40">
+            <div id="profile-info">
+                <span id="user-name" th:text="'Hello, ' + ${userName}">Hello, User</span>
+                <div id="view-profile">
+                    <a th:href="@{/profile}">View Profile</a>
+                </div>
+                <button id="logout-btn">Logout</button>
+            </div>
+        </div>
+    </div>
+
+    <main class="main-content">
+        <section class="portfolio">
+            <div class="portfolio-header">
+                <h2>My Portfolios</h2>
+                <button class="btn add-portfolio" th:onclick="'window.location.href=\'/create-portfolio/' + ${userId} + '\';'">+</button>
+            </div>
+            <ul id="portfolio-list">
+                <!-- Dynamic portfolio list injected here -->
+            </ul>
+        </section>
+
+        <section class="portfolio-details">
+            <div class="balance">
+                <h3>Current Balance</h3>
+                <p id="current-balance" class="balance-amount">&#8377;0.00</p>
+                <p id="profit-loss" class="balance-profit">+&#8377;0.00</p>
+            </div>
+            <button class="btn buy-stocks" onclick="window.location.href='/dummy-stock'">Buy Stocks</button>
+            <table class="assets-table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Name</th>
+                        <th>Price</th>
+                        <th>24h%</th>
+                        <th>Holdings</th>
+                        <th>Avg. Buy Price</th>
+                        <th>Profit/Loss</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="assets-table-body">
+                    <!-- Dynamic asset rows injected here -->
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+    <script th:src="@{/js/portfolio.js}"></script>
+</body>
+
+</html>

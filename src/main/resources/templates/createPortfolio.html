@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Portfolio</title>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-image: url('/image/pexels-rdne-7947709.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .form-container {
+            background: rgba(255, 255, 255, 0.8);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            width: 400px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .form-container:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .form-container h2 {
+            margin-bottom: 25px;
+            text-align: center;
+            font-size: 24px;
+            color: #333;
+        }
+
+        .form-container label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        .form-container input,
+        .form-container textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-container input:focus,
+        .form-container textarea:focus {
+            border-color: #4CAF50;
+            outline: none;
+        }
+
+        .form-container button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px 18px;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            width: 100%;
+        }
+
+        .form-container button:hover {
+            background-color: #45a049;
+        }
+
+        .success-message,
+        .error-message {
+            margin-top: 15px;
+            padding: 10px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .success-message {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            border-radius: 6px;
+        }
+
+        .error-message {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+            border-radius: 6px;
+        }
+
+        .field-error {
+            color: #ff4d4d;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        @media (max-width: 480px) {
+            .form-container {
+                width: 90%;
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h2>Create Portfolio</h2>
+        <form id="portfolioForm" novalidate="novalidate">
+            <input type="hidden" id="userId" th:value="${userId}" />
+
+            <label for="portfolioName">Portfolio Name:</label>
+            <input type="text" id="portfolioName" name="portfolioName" required>
+            <div class="field-error" id="portfolioNameError"></div>
+
+            <label for="investmentAgenda">Investment Agenda:</label>
+            <textarea id="investmentAgenda" name="investmentAgenda" required></textarea>
+            <div class="field-error" id="investmentAgendaError"></div>
+
+            <label for="budgetAmount">Budget Amount:</label>
+            <input type="number" id="budgetAmount" name="budgetAmount" required min="1000" step="0.01">
+            <div class="field-error" id="budgetAmountError"></div>
+
+            <button type="submit">Submit</button>
+        </form>
+        <div class="success-message" id="successMessage"></div>
+        <div class="error-message" id="errorMessage"></div>
+    </div>
+
+    <script>
+        document.getElementById('portfolioForm').addEventListener('submit', async function (event) {
+            event.preventDefault(); // Prevent form from refreshing the page
+
+            // Clear previous error messages
+            document.getElementById('portfolioNameError').textContent = "";
+            document.getElementById('investmentAgendaError').textContent = "";
+            document.getElementById('budgetAmountError').textContent = "";
+
+            // Collect form data
+            const formData = {
+                portfolioName: document.getElementById('portfolioName').value,
+                investmentAgenda: document.getElementById('investmentAgenda').value,
+                budgetAmount: parseFloat(document.getElementById('budgetAmount').value)
+            };
+
+            let isValid = true;
+
+            // Validation checks
+           // Validation checks
+if (!formData.portfolioName) {
+    document.getElementById('portfolioNameError').textContent = "Portfolio Name is required.";
+    isValid = false;
+} else if (formData.portfolioName.length < 5) {
+    document.getElementById('portfolioNameError').textContent = "Portfolio Name must be at least 5 characters long.";
+    isValid = false;
+}
+
+if (!formData.investmentAgenda) {
+    document.getElementById('investmentAgendaError').textContent = "Investment Agenda is required.";
+    isValid = false;
+} else if (formData.investmentAgenda.length < 5) {
+    document.getElementById('investmentAgendaError').textContent = "Investment Agenda must be at least 5 characters long.";
+    isValid = false;
+}
+
+if (isNaN(formData.budgetAmount) || formData.budgetAmount < 1000) {
+    document.getElementById('budgetAmountError').textContent = "Budget Amount must be a number and at least 1000.";
+    isValid = false;
+}
+           
+
+            if (!isValid) {
+                return; // Stop the form from being submitted if validation fails
+            }
+
+            // Get userId from hidden input or context
+            const userId = document.getElementById('userId').value;
+
+            try {
+                // Send data to backend
+                const response = await fetch(`/portfolios/${userId}?budgetAmount=${formData.budgetAmount}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        portfolioName: formData.portfolioName,
+                        investmentAgenda: formData.investmentAgenda
+                    })
+                });
+
+                if (response.ok) {
+                    document.getElementById('successMessage').textContent = "Portfolio created successfully!";
+                    document.getElementById('errorMessage').textContent = "";
+                    document.getElementById('portfolioForm').reset();
+
+                    // Redirect to "/portfolio" on success
+                    setTimeout(() => {
+                        window.location.href = "/portfolio";
+                    }, 1000);
+                } else {
+                    const errorData = await response.json();
+                    document.getElementById('errorMessage').textContent = errorData.message || "An error occurred.";
+                    document.getElementById('successMessage').textContent = "";
+                }
+            } catch (error) {
+                document.getElementById('errorMessage').textContent = "An unexpected error occurred. Please try again.";
+                document.getElementById('successMessage').textContent = "";
+            }
+        });
+    </script>
+</body>
+</html>

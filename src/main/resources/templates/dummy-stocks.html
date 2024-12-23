@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRYPTO</title>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #F5FFFA;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            text-align: center;
+            color: #1E90FF;
+            margin-top: 40px;
+            font-size: 32px;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .form-group {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .form-group input {
+            padding: 12px;
+            width: 250px;
+            font-size: 16px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus {
+            border-color: #007bff;
+        }
+
+        table {
+            width: 100%;
+            margin-top: 40px;
+            border-collapse: collapse;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 14px;
+            text-align: center;
+            font-size: 16px;
+        }
+
+        th {
+            background-color: #007bff;
+            color: white;
+            font-weight: bold;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .select-circle {
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            background-color: #ccc;
+            cursor: pointer;
+            border: 2px solid #ddd;
+            transition: background-color 0.3s;
+        }
+
+        .selected {
+            background-color: #28a745;
+        }
+
+        .highlight {
+            background-color: #28a745 !important;
+            color: white;
+        }
+
+        input[type="number"] {
+            width: 100px;
+            text-align: center;
+            font-size: 16px;
+        }
+
+        .submit-btn {
+            background-color: #007bff;
+            color: white;
+            font-size: 18px;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s;
+        }
+
+        .submit-btn:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+
+        .submit-btn:active {
+            transform: scale(1);
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            table, th, td {
+                font-size: 14px;
+            }
+            .form-group input {
+                width: 100%;
+                font-size: 14px;
+            }
+        }
+
+        /* Stock Name Colorful Design */
+        .stock-name {
+            font-weight: bold;
+            color: #007bff;
+            transition: color 0.3s;
+        }
+
+        .stock-name:hover {
+            color: #ff4500;
+        }
+
+        /* Dynamic Color for Percentage Change */
+        .positive-change {
+            color: #28a745;
+            font-weight: bold;
+        }
+
+        .negative-change {
+            color: #e74c3c;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>BUY-CRYPTO-CURRENCIES</h1>
+        <div class="form-group">
+            <label for="portfolioId">Enter Portfolio ID:</label>
+            <input type="number" id="portfolioId" placeholder="Enter Portfolio ID">
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Stock Name</th>
+                    <th>Current Price</th>
+                    <th>Avg. Buy Price</th>
+                    <th>Percentage Change (24h)</th>
+                    <th>Holdings</th>
+                    <th>Select</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="stock : ${stocks}" 
+                    th:attr="onclick='selectRow(' + ${stock.id} + ', this.querySelector(\'.select-circle\'), this, \'' + ${stock.stockName} + '\', ' + ${stock.currentPrice} + ', ' + ${stock.avgBuyPrice} + ', ' + ${stock.percentChange24h} + ')'">
+                    <td th:text="${stock.id}">1</td>
+                    <td class="stock-name" th:text="${stock.stockName}">Bitcoin</td>
+                    <td th:text="${stock.currentPrice}">$150.25</td>
+                    <td th:text="${stock.avgBuyPrice}">$145.00</td>
+                    <td class="change-column">
+                        <span th:class="${stock.percentChange24h > 0 ? 'positive-change' : 'negative-change'}" th:text="${stock.percentChange24h}">+5.00%</span>
+                    </td>
+                    <td><input type="number" th:id="'holdings-' + ${stock.id}" th:value="${stock.holdings}" min="0" /></td>
+                    <td>
+                        <div class="select-circle" title="Select this stock"></div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="form-group">
+            <button class="submit-btn" type="button" onclick="submitSelection()">Buy Selected Stocks</button>
+        </div>
+    </div>
+
+    <script>
+        let selectedStocks = [];
+
+        function selectRow(stockId, circleElement, rowElement, stockName, currentPrice, avgBuyPrice, percentChange24h) {
+            const holdings = document.getElementById(`holdings-${stockId}`).value; // Get modified holdings
+            const index = selectedStocks.findIndex(item => item.stockId === stockId);
+
+            if (index === -1) {
+                if (holdings <= 0 || holdings === '') {
+                    alert('Please enter a valid holdings value before selecting.');
+                    return;
+                }
+                selectedStocks.push({
+                    stockId,
+                    stockName,
+                    currentPrice,
+                    holdings: parseFloat(holdings),
+                    avgBuyPrice,
+                    percentChange24h
+                });
+                circleElement.classList.add('selected');
+                rowElement.classList.add('highlight');
+            } else {
+                selectedStocks.splice(index, 1);
+                circleElement.classList.remove('selected');
+                rowElement.classList.remove('highlight');
+            }
+        }
+
+        function submitSelection() {
+            if (selectedStocks.length === 0) {
+                alert('No stocks selected.');
+                return;
+            }
+
+            const portfolioId = document.getElementById('portfolioId').value;
+            const stockData = selectedStocks.map(stock => ({
+                stockName: stock.stockName,
+                currentPrice: stock.currentPrice,
+                holdings: stock.holdings,
+                avgBuyPrice: stock.avgBuyPrice,
+                percentChange24h: stock.percentChange24h
+            }));
+
+            fetch(`/stock/bulk-insert/${portfolioId}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(stockData)
+            })
+            .then(response => {
+                if (response.ok) {
+                    alert('Stocks Purchased successfully!');
+                    selectedStocks = [];
+                    document.querySelectorAll('.select-circle').forEach(el => el.classList.remove('selected'));
+                    document.querySelectorAll('.highlight').forEach(el => el.classList.remove('highlight'));
+                    setTimeout(() => {
+                        window.location.href = '/portfolio';
+                    }, 500);
+                } else {
+                    alert('Warning! You are attempting to make a purchase that exceeds your budget.');
+                }
+            })
+            .catch(error => {
+                alert('Error purchasing stocks: ' + error);
+            });
+        }
+    </script>
+
+</body>
+</html>

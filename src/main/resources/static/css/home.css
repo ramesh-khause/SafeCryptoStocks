@@ -1,0 +1,142 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    color: #333;
+}
+
+/* Navbar logo color */
+.navbar .logo a {
+    color: white;
+    text-decoration: none; /* Remove underline */
+    font-weight: bold; /* Make the text bold */
+    font-size: 34px; /* Adjust the font size as needed */
+}
+
+.navbar .logo a i {
+    margin-right: 8px; /* Add some spacing between the icon and text */
+}
+
+/* Optional: Add hover effect for the logo */
+.navbar .logo a:hover {
+    color: #007bff; /* Change color when hovered */
+}
+
+
+
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background-color: #4caf50;
+    color: white;
+}
+
+.navbar .logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #fff;
+}
+.navbar .auth-buttons .btn {
+    margin-left: 1rem;
+    padding: 0.5rem 1rem;
+    text-decoration: none;
+    color: white;
+    background-color: #2563EB; /* Primary button color */
+    border-radius: 5px;
+    font-weight: 600; /* Bold font */
+    font-size: 1rem; /* Increased font size for readability */
+    letter-spacing: 1px; /* Slight letter spacing */
+    text-transform: uppercase; /* Uppercase text for style */
+    display: inline-block;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s ease-in-out, box-shadow 0.3s; /* Smooth transitions */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+.navbar .auth-buttons .btn:hover {
+    background-color: #162447; /* Darker hover color */
+    transform: translateY(-3px); /* Slight upward movement on hover */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Increased shadow on hover for more depth */
+}
+
+.navbar .auth-buttons .btn:active {
+    transform: translateY(1px); /* Slight downward movement on click */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Normal shadow when active */
+}
+
+.hero-section {
+    background: linear-gradient(135deg, #4caf50, #2196f3);
+    color: white;
+    padding: 4rem 2rem;
+    text-align: center;
+}
+
+.hero-content h1 {
+    font-size: 3rem;
+}
+
+.crypto-market {
+    padding: 2rem;
+    background-color: #fff;
+    text-align: center;
+}
+
+.crypto-market h2 {
+    color: #4caf50;
+}
+
+.market-overview {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-top: 1rem;
+}
+
+.crypto-card {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 1rem;
+    text-align: center;
+    width: 200px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.crypto-card h3 {
+    color: #4caf50;
+}
+
+.features {
+    background: linear-gradient(135deg, #ff9800, #f44336);
+    color: white;
+    padding: 2rem;
+    text-align: center;
+}
+
+.features-grid {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-top: 1rem;
+}
+
+.feature {
+    max-width: 200px;
+    text-align: center;
+}
+
+.feature i {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+    color: #ffeb3b;
+}
+
+.footer {
+    text-align: center;
+    padding: 1rem;
+    background-color: #162447;
+    color: white;
+}

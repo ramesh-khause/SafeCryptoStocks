@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SIGN UP</title>
+
+    <!-- Add CSS, Font Awesome, etc. -->
+    <link rel="stylesheet" href="/css/signup.css" th:href="@{/css/signup.css}"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+<div id="parent" class="flex justify-center items-center h-screen">
+
+    <form id="signup-form" class="bg-white p-8 rounded-lg shadow-md w-full max-w-md"
+          th:action="@{/registerUser}" th:object="${user}" method="post" novalidate="novalidate">
+          
+<!-- Progress Bar -->
+        <div id="progress-bar"></div>
+       <h1 class="text-2xl font-semibold text-center text-blue-600 mb-4">
+  <a href="/home" style="text-decoration: none; color: inherit;">
+    <i class="fa-brands fa-servicestack"></i> SafeCryptoStocks
+  </a>
+</h1>
+       
+     <h2 class="text-lg font-medium text-center mb-6" style="color: #2563EB;"><b>Sign Up</b></h2>
+     
+    <!-- Display Global Message (if any) -->
+        <div th:if="${message}" class="mb-4">
+            <p th:text="${message}" th:classappend="${messageType == 'error' ? 'text-red-500' : 'text-green-500'} text-sm text-center"></p>
+        </div>
+
+        <!-- Username -->
+        <div class="form-group mb-4">
+            <label for="username" class="block text-sm font-medium text-gray-700 sr-only">User Name</label>
+            <div class="relative mt-1">
+                <i class="fa-solid fa-user input-icon absolute left-3 top-3 text-gray-400"></i>
+                <input id="username" type="text" placeholder="User Name" th:field="*{username}" required
+                       minlength="5" maxlength="10"
+                       class="pl-10 w-full border-black-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
+            </div>
+            <p th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="text-red-500 text-sm mt-1"></p>
+        </div>
+
+        <!-- Password -->
+        <div class="form-group mb-4">
+            <label for="password" class="block text-sm font-medium text-gray-700 sr-only">Password</label>
+            <div class="relative mt-1">
+                <i class="fa-solid fa-lock input-icon absolute left-3 top-3 text-gray-400"></i>
+                <input id="password" type="password" placeholder="Password" th:field="*{password}" required
+                       minlength="8" maxlength="15"
+                       class="pl-10 w-full border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
+            </div>
+            <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="text-red-500 text-sm mt-1"></p>
+        </div>
+
+        <!-- Email -->
+        <div class="form-group mb-4">
+            <label for="email" class="block text-sm font-medium text-gray-700 sr-only">Email</label>
+            <div class="relative mt-1">
+                <i class="fa-regular fa-envelope input-icon absolute left-3 top-3 text-gray-400"></i>
+                <input id="email" type="email" placeholder="Email" th:field="*{email}" required
+                       class="pl-10 w-full border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
+            </div>
+            <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="text-red-500 text-sm mt-1"></p>
+        </div>
+
+        <!-- First Name -->
+        <div class="form-group mb-4">
+            <label for="firstName" class="block text-sm font-medium text-gray-700 sr-only">First Name</label>
+            <div class="relative mt-1">
+                <i class="fa-solid fa-user-pen input-icon absolute left-3 top-3 text-gray-400"></i>
+                <input id="firstName" type="text" placeholder="First Name" th:field="*{firstname}" required
+                       minlength="3" maxlength="10"
+                       class="pl-10 w-full border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
+            </div>
+            <p th:if="${#fields.hasErrors('firstname')}" th:errors="*{firstname}" class="text-red-500 text-sm mt-1"></p>
+        </div>
+
+        <!-- Last Name -->
+        <div class="form-group mb-4">
+            <label for="lastName" class="block text-sm font-medium text-gray-700 sr-only">Last Name</label>
+            
+            <div class="relative mt-1">
+                <i class="fa-solid fa-user-pen input-icon absolute left-3 top-3 text-gray-400"></i>
+                <input id="lastName" type="text" placeholder="Last Name" th:field="*{lastname}" required
+                       minlength="3" maxlength="10"
+                       class="pl-10 w-full border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
+            </div>
+            <p th:if="${#fields.hasErrors('lastname')}" th:errors="*{lastname}" class="text-red-500 text-sm mt-1"></p>
+        </div>
+
+        <!-- Address -->
+        <div class="form-group mb-4">
+            <label for="address" class="block text-sm font-medium text-gray-700 sr-only">Address</label>
+            <div class="relative mt-1">
+                <i class="fa-solid fa-address-card input-icon absolute left-3 top-3 text-gray-400"></i>
+                <input id="address" type="text" placeholder="Address" th:field="*{address}" required
+                       minlength="3" maxlength="20"
+                       class="pl-10 w-full border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
+            </div>
+            <p th:if="${#fields.hasErrors('address')}" th:errors="*{address}" class="text-red-500 text-sm mt-1"></p>
+        </div>
+
+
+
+        <!-- Submit Button -->
+        <div class="form-group mb-4">
+            <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700">
+                Register
+            </button>
+        </div>
+
+        <p class="text-sm text-center">
+            Already have an account? 
+            <a th:href="@{/login}" class="text-blue-600 hover:underline">Login</a>
+        </p>
+    </form>
+</div>
+
+<script th:src="@{/js/signup.js}"></script>
+
+</body>
+</html>
