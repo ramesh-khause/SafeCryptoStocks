@@ -73,14 +73,30 @@ public class PortfolioService {
   
     
     
-    //update portfolio by portfolio id
-    public Portfolio updatePortfolio(Long portfolioId, Portfolio portfolioDetails) {
-        Portfolio portfolio = getPortfolioById(portfolioId);
-        portfolio.setPortfolioName(portfolioDetails.getPortfolioName());
-        portfolio.setInvestmentAgenda(portfolioDetails.getInvestmentAgenda());
-        portfolio.setUpdatedAt(LocalDateTime.now());
-        return portfolioRepository.save(portfolio);
-    }
+   public Portfolio updatePortfolio(Long portfolioId, Portfolio portfolioDetails) {
+	    // Fetch the portfolio to be updated
+	    Portfolio portfolio = getPortfolioById(portfolioId);
+
+	    // Update portfolio details
+	    portfolio.setPortfolioName(portfolioDetails.getPortfolioName());
+	    portfolio.setInvestmentAgenda(portfolioDetails.getInvestmentAgenda());
+	    portfolio.setUpdatedAt(LocalDateTime.now());
+
+	    // Fetch and update the budget associated with the portfolio
+	    List<Budget> budgets = portfolio.getBudgets();
+	    if (budgets != null && !budgets.isEmpty()) {
+	        // Assuming one budget per portfolio
+	        Budget budget = budgets.get(0);
+	        budget.setName(portfolioDetails.getPortfolioName()); // Sync name with portfolio
+	        budget.setDescription(portfolioDetails.getInvestmentAgenda()); // Sync description
+	       
+	        budgetService.updateBudget(budget); // Update the budget in the database
+	    }
+
+	    // Save the updated portfolio
+	    return portfolioRepository.save(portfolio);
+	}
+
 
     //deleter portfolio by portfolio id
     public void deletePortfolio(Long portfolioId) {
