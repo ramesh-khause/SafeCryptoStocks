@@ -79,28 +79,6 @@
             background-color: #45a049;
         }
 
-        .success-message,
-        .error-message {
-            margin-top: 15px;
-            padding: 10px;
-            text-align: center;
-            font-weight: bold;
-        }
-
-        .success-message {
-            background-color: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
-            border-radius: 6px;
-        }
-
-        .error-message {
-            background-color: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
-            border-radius: 6px;
-        }
-
         .field-error {
             color: #ff4d4d;
             font-size: 14px;
@@ -112,6 +90,42 @@
                 width: 90%;
                 padding: 15px;
             }
+        }
+
+        /* Popup styles */
+        .popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            z-index: 1000;
+        }
+
+        .popup.success {
+            border: 2px solid #4CAF50;
+        }
+
+        .popup .icon {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+
+        .popup.success .icon {
+            color: #4CAF50;
+        }
+
+        .popup .message {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
         }
     </style>
 </head>
@@ -135,8 +149,12 @@
 
             <button type="submit">Submit</button>
         </form>
-        <div class="success-message" id="successMessage"></div>
-        <div class="error-message" id="errorMessage"></div>
+    </div>
+
+    <!-- Popup -->
+    <div id="popup" class="popup">
+        <div class="icon">😊</div>
+        <div class="message">Portfolio created successfully!</div>
     </div>
 
     <script>
@@ -150,36 +168,28 @@
 
             // Collect form data
             const formData = {
-                portfolioName: document.getElementById('portfolioName').value,
-                investmentAgenda: document.getElementById('investmentAgenda').value,
+                portfolioName: document.getElementById('portfolioName').value.trim(),
+                investmentAgenda: document.getElementById('investmentAgenda').value.trim(),
                 budgetAmount: parseFloat(document.getElementById('budgetAmount').value)
             };
 
             let isValid = true;
 
             // Validation checks
-           // Validation checks
-if (!formData.portfolioName) {
-    document.getElementById('portfolioNameError').textContent = "Portfolio Name is required.";
-    isValid = false;
-} else if (formData.portfolioName.length < 5) {
-    document.getElementById('portfolioNameError').textContent = "Portfolio Name must be at least 5 characters long.";
-    isValid = false;
-}
+            if (!formData.portfolioName || formData.portfolioName.length < 5) {
+                document.getElementById('portfolioNameError').textContent = "Portfolio Name must be at least 5 characters long.";
+                isValid = false;
+            }
 
-if (!formData.investmentAgenda) {
-    document.getElementById('investmentAgendaError').textContent = "Investment Agenda is required.";
-    isValid = false;
-} else if (formData.investmentAgenda.length < 5) {
-    document.getElementById('investmentAgendaError').textContent = "Investment Agenda must be at least 5 characters long.";
-    isValid = false;
-}
+            if (!formData.investmentAgenda || formData.investmentAgenda.length < 5) {
+                document.getElementById('investmentAgendaError').textContent = "Investment Agenda must be at least 5 characters long.";
+                isValid = false;
+            }
 
-if (isNaN(formData.budgetAmount) || formData.budgetAmount < 1000) {
-    document.getElementById('budgetAmountError').textContent = "Budget Amount must be a number and at least 1000.";
-    isValid = false;
-}
-           
+            if (isNaN(formData.budgetAmount) || formData.budgetAmount < 1000) {
+                document.getElementById('budgetAmountError').textContent = "Budget Amount must be a number and at least 1000.";
+                isValid = false;
+            }
 
             if (!isValid) {
                 return; // Stop the form from being submitted if validation fails
@@ -189,7 +199,6 @@ if (isNaN(formData.budgetAmount) || formData.budgetAmount < 1000) {
             const userId = document.getElementById('userId').value;
 
             try {
-                // Send data to backend
                 const response = await fetch(`/portfolios/${userId}?budgetAmount=${formData.budgetAmount}`, {
                     method: 'POST',
                     headers: {
@@ -202,24 +211,33 @@ if (isNaN(formData.budgetAmount) || formData.budgetAmount < 1000) {
                 });
 
                 if (response.ok) {
-                    document.getElementById('successMessage').textContent = "Portfolio created successfully!";
-                    document.getElementById('errorMessage').textContent = "";
+                    showPopup("Portfolio created successfully!", "success");
                     document.getElementById('portfolioForm').reset();
-
-                    // Redirect to "/portfolio" on success
                     setTimeout(() => {
                         window.location.href = "/portfolio";
-                    }, 1000);
+                    }, 2000);
                 } else {
                     const errorData = await response.json();
-                    document.getElementById('errorMessage').textContent = errorData.message || "An error occurred.";
-                    document.getElementById('successMessage').textContent = "";
+                    alert(errorData.message || "An error occurred.");
                 }
             } catch (error) {
-                document.getElementById('errorMessage').textContent = "An unexpected error occurred. Please try again.";
-                document.getElementById('successMessage').textContent = "";
+                alert("An unexpected error occurred. Please try again.");
             }
         });
+
+        function showPopup(message, type) {
+            const popup = document.getElementById('popup');
+            popup.querySelector('.message').textContent = message;
+
+            if (type === "success") {
+                popup.classList.add('success');
+            }
+
+            popup.style.display = 'flex';
+            setTimeout(() => {
+                popup.style.display = 'none';
+            }, 2000);
+        }
     </script>
 </body>
 </html>
